@@ -1445,14 +1445,36 @@ sub QueueListPermission {
 
     # 'ro' is the default permission if no queue is given and parameter 'Default' is not set.
     my $DefaultPermission = $Param{Default} || 'ro';
-    my $Permission = !IsArrayRefWithData( $Param{QueueIDs} ) ? $DefaultPermission : '';
 
-    # The lowest permission level counts.
+    return $DefaultPermission if !IsArrayRefWithData( $Param{QueueIDs} );
+
+    # final permission is rw or '' if all are of that kind, else ro
+    my $Permission;
+    QUEUE:
     for my $QueueID ( @{ $Param{QueueIDs} } ) {
-        if ( $RwQueues{$QueueID} && !$Permission ) {
-            $Permission = 'rw';
-        } elsif ( !$RwQueues{$QueueID} && $RoQueues{$QueueID} ) {
+        if ( !defined $Permission ) {
+            if ( $RwQueues{$QueueID} ) {
+                $Permission = 'rw';
+            }
+            elsif ( $RoQueues{$QueueID} ) {
+                $Permission = 'ro';
+                last QUEUE;
+            }
+            else {
+                $Permission = '';
+            }
+        }
+
+        elsif ( $Permission eq '' ) {
+            if ( $RwQueues{$QueueID} || $RwQueues{$QueueID} ) {
+                $Permission = 'ro';
+                last QUEUE;
+            }
+        }
+
+        elsif ( !$RwQueues{$QueueID} ) {
             $Permission = 'ro';
+            last QUEUE;
         }
     }
 
