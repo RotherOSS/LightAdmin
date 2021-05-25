@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.1">
+	<Name>RotherOSS-LightAdmin</Name>
+	<Version>6.0.2</Version>
+	<Vendor>Rother OSS GmbH</Vendor>
+	<URL>https://rother-oss.com/</URL>
+	<License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
+	<ChangeLog Date="2021-05-19 21:30:00" Version="6.0.2">Hinweis hinzugefügt, wenn die Berechtigung zum Bearbeiten fehlt. Berechtigung bei der Anzeige von Vorlagen geändert.</ChangeLog>
+	<ChangeLog Date="2021-05-17 08:00:00" Version="6.0.1">Initial Version.</ChangeLog>
+	<Description Lang="de">Erlaubt das Erstellen und Verwalten von Vorlagen, Anhängen und Ticket-Benachrichtigungen mit einer Queue-/Gruppen-basierten Berechtigung. Zudem wird der Filter in Ticket-Benachrichtigungen um die Optionen: „Nur innerhalb der Arbeitszeit senden“ und „Nur außerhalb der Arbeitszeit senden“ erweitert.</Description>
+	<Framework>6.0.x</Framework>
+	<BuildDate>?</BuildDate>
+	<BuildHost>?</BuildHost>
+	<Filelist>
+		<File Permission="660" Location="Custom/Kernel/Modules/AdminAttachment.pm"/>
+		<File Permission="660" Location="Custom/Kernel/Modules/AdminNotificationEvent.pm"/>
+		<File Permission="660" Location="Custom/Kernel/Modules/AdminQueueTemplates.pm"/>
+		<File Permission="660" Location="Custom/Kernel/Modules/AdminTemplate.pm"/>
+		<File Permission="660" Location="Custom/Kernel/Modules/AdminTemplateAttachment.pm"/>
+		<File Permission="660" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminAttachment.tt"/>
+		<File Permission="660" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminNotificationEvent.tt"/>
+		<File Permission="660" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminTemplate.tt"/>
+		<File Permission="660" Location="Custom/Kernel/System/Ticket/Event/NotificationEvent.pm"/>
+		<File Permission="660" Location="Custom/Kernel/System/Web/InterfaceAgent.pm"/>
+		<File Permission="660" Location="Custom/Kernel/System/Queue.pm"/>
+		<File Permission="660" Location="Custom/Kernel/System/StdAttachment.pm"/>
+		<File Permission="660" Location="Kernel/Language/de_RotherOSSLightAdmin.pm"/>
+	</Filelist>
+</otrs_package>
