@@ -54,9 +54,7 @@ sub Run {
             $StandardTemplateData{TemplateType},
         );
 
-        # ---
-        # RotherOSS
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             # Filter out queues without permission.
             my %RwQueues = $QueueObject->GetAllQueues(
@@ -82,7 +80,7 @@ sub Run {
                 $StandardTemplateType = '';
             }
         }
-        # ---
+# EO LightAdmin
 
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
@@ -128,9 +126,7 @@ sub Run {
             QueueID => $ID,
         );
 
-        # ---
-        # RotherOSS
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             # Filter out templates without permission.
             for my $StandardTemplateID ( keys %StandardTemplateData ) {
@@ -156,7 +152,7 @@ sub Run {
                 undef %Member;
             }
         }
-        # ---
+# EO LightAdmin
 
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
@@ -188,9 +184,7 @@ sub Run {
         # create hash with selected templates
         my %TemplatesSelected = map { $_ => 1 } @TemplatesSelected;
 
-        # ---
-        # RotherOSS: Backend check to prevent saving without permission.
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             for my $StandardTemplateID ( keys %TemplatesSelected ) {
                 next if !$StandardTemplateID;  # Can contain empty string.
@@ -208,7 +202,7 @@ sub Run {
                 }
             }
         }
-        # ---
+# EO LightAdmin
 
         # check all used templates
         for my $TemplateID (@TemplatesAll) {
@@ -258,9 +252,8 @@ sub Run {
         # create hash with selected queues
         my %QueuesSelected = map { $_ => 1 } @QueuesSelected;
 
-        # ---
-        # RotherOSS: Backend check to prevent saving without permission.
-        # ---
+# Rother OSS / LightAdmin
+        # backend check to prevent saving without permission.
         if ( $Self->{LightAdmin} ) {
             my %RwQueues = $QueueObject->GetAllQueues(
                 UserID => $Self->{UserID},
@@ -275,7 +268,7 @@ sub Run {
                 }
             }
         }
-        # ---
+# EO LightAdmin
 
         # check all used queues
         for my $QueueID (@QueuesAll) {
@@ -423,7 +416,9 @@ sub _Overview {
     my ( $Self, %Param ) = @_;
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');  # RotherOSS:
+# Rother OSS / LightAdmin
+    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
+# EO LightAdmin
 
     $LayoutObject->Block(
         Name => 'Overview',
@@ -459,9 +454,7 @@ sub _Overview {
             keys %StandardTemplateData
             )
         {
-            # ---
-            # RotherOSS
-            # ---
+# Rother OSS / LightAdmin
             if ( $Self->{LightAdmin} ) {
                 my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $StandardTemplateID );
                 my $Permission = $QueueObject->QueueListPermission(
@@ -473,7 +466,7 @@ sub _Overview {
                     next;
                 }
             }
-            # ---
+# EO LightAdmin
 
             # set output class
             $LayoutObject->Block(
@@ -498,9 +491,7 @@ sub _Overview {
     # get queue data
     my %QueueData = $Kernel::OM->Get('Kernel::System::Queue')->QueueList( Valid => 1 );
 
-    # ---
-    # RotherOSS
-    # ---
+# Rother OSS / LightAdmin
     if ( $Self->{LightAdmin} ) {
         # Filter out queues without permission.
         my %RwQueues = $QueueObject->GetAllQueues(
@@ -512,7 +503,7 @@ sub _Overview {
             delete $QueueData{$QueueID} if !$RwQueues{$QueueID};
         }
     }
-    # ---
+# EO LightAdmin
 
     # if there are results to show
     if (%QueueData) {

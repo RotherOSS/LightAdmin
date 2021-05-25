@@ -32,7 +32,9 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');  # RotherOSS:
+# Rother OSS / LightAdmin
+    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
+# EO LightAdmin
     my $RichText     = $ConfigObject->Get('Frontend::RichText');
     my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid      => 1,
@@ -63,12 +65,10 @@ sub Run {
     # get registered transport layers
     my %RegisteredTransports = %{ $Kernel::OM->Get('Kernel::Config')->Get('Notification::Transport') || {} };
 
-    # ---
-    # RotherOSS:
-    # ---
+# Rother OSS / LightAdmin
     # Get permission level.
     my $Permission = $Self->{LightAdmin} ? '' : 'rw';
-    # ---
+# EO LightAdmin
 
     # ------------------------------------------------------------ #
     # change
@@ -83,9 +83,7 @@ sub Run {
             ID => $ID,
         );
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
 
@@ -105,7 +103,7 @@ sub Run {
                 );
             }
         }
-        # ---
+# EO LightAdmin
 
         $Output .= $LayoutObject->Notify( Info => Translatable('Notification updated!') )
             if ( $Notification && $Notification eq 'Update' );
@@ -150,13 +148,16 @@ sub Run {
         }
         PARAMETER:
         for my $Parameter (
-            @ArticleSearchableFieldsKeys,  # RotherOSS: CalendarFilter
+            @ArticleSearchableFieldsKeys,
             qw(Recipients RecipientAgents RecipientGroups RecipientRoles
             Events StateID QueueID PriorityID LockID TypeID ServiceID SLAID
-            CustomerID CustomerUserID CalendarFilter IsVisibleForCustomer ArticleAttachmentInclude
+            CustomerID CustomerUserID IsVisibleForCustomer ArticleAttachmentInclude
             ArticleSenderTypeID ArticleIsVisibleForCustomer ArticleCommunicationChannelID
             Transports OncePerDay SendOnOutOfOffice VisibleForAgent VisibleForAgentTooltip
             LanguageID AgentEnabledByDefault)
+# Rother OSS / LightAdmin
+            , 'CalendarFilter'
+# EO LightAdmin
             )
         {
             my @Data = $ParamObject->GetArray( Param => $Parameter );
@@ -194,9 +195,7 @@ sub Run {
             }
         }
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => $GetParam{Data}->{QueueID},
@@ -209,7 +208,7 @@ sub Run {
                 $Error = 1;
             }
         }
-        # ---
+# EO LightAdmin
 
         # to store dynamic fields profile data
         my %DynamicFieldValues;
@@ -411,13 +410,16 @@ sub Run {
         }
         PARAMETER:
         for my $Parameter (
-            @ArticleSearchableFieldsKeys,  # RotherOSS: CalendarFilter
+            @ArticleSearchableFieldsKeys,
             qw(Recipients RecipientAgents RecipientRoles RecipientGroups Events StateID QueueID
-            PriorityID LockID TypeID ServiceID SLAID CustomerID CustomerUserID CalendarFilter
+            PriorityID LockID TypeID ServiceID SLAID CustomerID CustomerUserID
             IsVisibleForCustomer ArticleAttachmentInclude
             ArticleSenderTypeID ArticleIsVisibleForCustomer ArticleCommunicationChannelID
             Transports OncePerDay SendOnOutOfOffice VisibleForAgent VisibleForAgentTooltip
             LanguageID AgentEnabledByDefault)
+# Rother OSS / LightAdmin
+            , 'CalendarFilter'
+# EO LightAdmin
             )
         {
             my @Data = $ParamObject->GetArray( Param => $Parameter );
@@ -455,9 +457,7 @@ sub Run {
             }
         }
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => $GetParam{Data}->{QueueID},
@@ -470,7 +470,7 @@ sub Run {
                 $Error = 1;
             }
         }
-        # ---
+# EO LightAdmin
 
         # to store dynamic fields profile data
         my %DynamicFieldValues;
@@ -642,9 +642,7 @@ sub Run {
             $GetParam{$Parameter} = $ParamObject->GetParam( Param => $Parameter ) || '';
         }
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my %Notification = $NotificationEventObject->NotificationGet(
                 ID     => $GetParam{ID},
@@ -660,7 +658,7 @@ sub Run {
         if ( $Permission ne 'rw' ) {
             return $LayoutObject->ErrorScreen();
         }
-        # ---
+# EO LightAdmin
 
         my $Delete = $NotificationEventObject->NotificationDelete(
             ID     => $GetParam{ID},
@@ -690,9 +688,7 @@ sub Run {
                 UserID => $Self->{UserID},
             );
 
-            # ---
-            # RotherOSS:
-            # ---
+# Rother OSS / LightAdmin
             if ( $Self->{LightAdmin} ) {
                 $Permission = $QueueObject->QueueListPermission(
                     QueueIDs => $NotificationSingleData{Data}{QueueID},
@@ -701,7 +697,7 @@ sub Run {
             }
 
             if ( !IsHashRefWithData( \%NotificationSingleData ) || $Permission ne 'rw' ) {
-            # ---
+# EO LightAdmin
                 return $LayoutObject->ErrorScreen(
                     Message => $LayoutObject->{LanguageObject}
                         ->Translate( 'There was an error getting data for Notification with ID:%s!', $NotificationID ),
@@ -723,9 +719,8 @@ sub Run {
 
             my @Data;
             for my $ItemID ( sort keys %Notificationdetails ) {
-                # ---
-                # RotherOSS: Filter out notifications without rw permission on all queues.
-                # ---
+# Rother OSS / LightAdmin
+                # filter out notifications without rw permission on all queues.
                 $Permission = $Self->{LightAdmin} ? '' : 'rw';
                 if ( $Self->{LightAdmin} ) {
                     $Permission = $QueueObject->QueueListPermission(
@@ -736,7 +731,7 @@ sub Run {
                 if ( $Permission eq 'rw' ) {
                     push @Data, $Notificationdetails{$ItemID};
                 }
-                # ---
+# EO LightAdmin
             }
             $NotificationData = \@Data;
         }
@@ -770,9 +765,7 @@ sub Run {
             UserID => $Self->{UserID},
         );
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => $NotificationData{Data}{QueueID},
@@ -780,7 +773,7 @@ sub Run {
             );
         }
         if ( !IsHashRefWithData( \%NotificationData ) || $Permission ne 'rw' ) {
-        # ---
+# EO LightAdmin
             return $LayoutObject->ErrorScreen(
                 Message => $LayoutObject->{LanguageObject}->Translate( 'Unknown Notification %s!', $NotificationID ),
             );
@@ -821,9 +814,8 @@ sub Run {
             Source => 'string',
         );
 
-        # ---
-        # RotherOSS: Import only works if user has 'rw' permission on all queues.
-        # ---
+# Rother OSS / LightAdmin
+        # import only works if user has 'rw' permission on all queues.
         if ( $Self->{LightAdmin} ) {
             my $Notifications = $Kernel::OM->Get('Kernel::System::YAML')->Load( Data => $UploadStuff{Content} );
 
@@ -845,7 +837,7 @@ sub Run {
                 );
             }
         }
-        # ---
+# EO LightAdmin
 
         my $OverwriteExistingNotifications = $ParamObject->GetParam( Param => 'OverwriteExistingNotifications' ) || '';
 
@@ -938,7 +930,9 @@ sub _Edit {
     my ( $Self, %Param ) = @_;
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');  # RotherOSS:
+# Rother OSS / LightAdmin
+    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
+# EO LightAdmin
 
     $LayoutObject->Block(
         Name => 'Overview',
@@ -1073,9 +1067,7 @@ sub _Edit {
         Class              => 'Modernize W75pc',
     );
 
-    # ---
-    # RotherOSS:
-    # ---
+# Rother OSS / LightAdmin
     if ( $Self->{LightAdmin} ) {
         # Make the queue field mandatory.
         $Param{LightAdmin} = 1;
@@ -1106,7 +1098,7 @@ sub _Edit {
             Class          => 'Modernize W75pc Validate_Required',
         );
     }
-    # ---
+# EO LightAdmin
 
     $Param{PrioritiesStrg} = $LayoutObject->BuildSelection(
         Data => {
@@ -1212,9 +1204,7 @@ sub _Edit {
         );
     }
 
-    # ---
-    # RotherOSS:
-    # ---
+# Rother OSS / LightAdmin
     $Param{CalendarFilterStrg} = $LayoutObject->BuildSelection(
         Data => {
             SendWithinHours  => Translatable('Only send within working hours'),
@@ -1226,7 +1216,7 @@ sub _Edit {
         Translation  => 1,
         PossibleNone => 1,
     );
-    # ---
+# EO LightAdmin
 
     # create dynamic field HTML for set with historical data options
     my $PrintDynamicFieldsSearchHeader = 1;
@@ -1714,9 +1704,7 @@ sub _Overview {
                 ID => $NotificationID,
             );
 
-            # ---
-            # RotherOSS:
-            # ---
+# Rother OSS / LightAdmin
             if ( $Self->{LightAdmin} ) {
                 $Data{Permission} = $Kernel::OM->Get('Kernel::System::Queue')->QueueListPermission(
                     QueueIDs => $Data{Data}{QueueID},
@@ -1725,7 +1713,7 @@ sub _Overview {
 
                 next if !$Data{Permission};
             }
-            # ---
+# EO LightAdmin
 
             $LayoutObject->Block(
                 Name => 'OverviewResultRow',

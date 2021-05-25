@@ -14,7 +14,9 @@ use strict;
 use warnings;
 
 use parent qw(Kernel::System::EventHandler);
-use Kernel::System::VariableCheck qw(IsArrayRefWithData);  # RotherOSS:
+# Rother OSS / LightAdmin
+use Kernel::System::VariableCheck qw(IsArrayRefWithData);
+# EO LightAdmin
 
 our @ObjectDependencies = (
     'Kernel::Config',
@@ -1408,9 +1410,7 @@ sub NameExistsCheck {
     return 0;
 }
 
-# ---
-# RotherOSS:
-# ---
+# Rother OSS / LightAdmin
 =head2 QueueListPermission()
 
 Get the permission for a list of queues.
@@ -1458,7 +1458,7 @@ sub QueueListPermission {
 
     return $Permission;
 }
-# ---
+# EO LightAdmin
 
 1;
 

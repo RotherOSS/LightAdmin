@@ -474,9 +474,7 @@ sub _NotificationFilter {
 
                 last VALUE if $Match;
             }
-            # ---
-            # RotherOSS
-            # ---
+# Rother OSS / LightAdmin
             elsif ( $Key eq 'CalendarFilter' ) {
                 # Get the applying calendar for the ticket.
                 my $Calendar = $Kernel::OM->Get('Kernel::System::Ticket')->TicketCalendarGet(
@@ -508,7 +506,7 @@ sub _NotificationFilter {
                     }
                 }
             }
-            # ---
+# EO LightAdmin
             else {
 
                 if (

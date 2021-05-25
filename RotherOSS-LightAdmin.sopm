@@ -9,8 +9,6 @@
 	<ChangeLog Date="2021-05-17 08:00:00" Version="6.0.1">Initial Version.</ChangeLog>
 	<Description Lang="de">Erlaubt das Erstellen und Verwalten von Vorlagen, Anhängen und Ticket-Benachrichtigungen mit einer Queue-/Gruppen-basierten Berechtigung. Zudem wird der Filter in Ticket-Benachrichtigungen um die Optionen: „Nur innerhalb der Arbeitszeit senden“ und „Nur außerhalb der Arbeitszeit senden“ erweitert.</Description>
 	<Framework>6.0.x</Framework>
-	<BuildDate>?</BuildDate>
-	<BuildHost>?</BuildHost>
 	<Filelist>
 		<File Permission="660" Location="Custom/Kernel/Modules/AdminAttachment.pm"/>
 		<File Permission="660" Location="Custom/Kernel/Modules/AdminNotificationEvent.pm"/>

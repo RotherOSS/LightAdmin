@@ -20,7 +20,9 @@ our @ObjectDependencies = (
     'Kernel::System::DB',
     'Kernel::System::Encode',
     'Kernel::System::Log',
-    'Kernel::System::Queue',  # RotherOSS:
+# Rother OSS / LightAdmin
+    'Kernel::System::Queue',
+# EO LightAdmin
     'Kernel::System::Valid',
 );
 
@@ -649,9 +651,7 @@ sub StdAttachmentStandardTemplateMemberList {
     return %Data;
 }
 
-# ---
-# RotherOSS:
-# ---
+# Rother OSS / LightAdmin
 =head2 StdAttachmentStandardTemplatePermission()
 
 Get the lowest permission level of all linked queues (attachment->template->queue).
@@ -709,7 +709,7 @@ sub StdAttachmentStandardTemplatePermission {
 
     return $Permission;
 }
-# ---
+# EO LightAdmin
 
 1;
 

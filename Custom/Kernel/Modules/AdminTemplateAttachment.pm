@@ -34,7 +34,9 @@ sub Run {
     my $LayoutObject           = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $StandardTemplateObject = $Kernel::OM->Get('Kernel::System::StandardTemplate');
     my $StdAttachmentObject    = $Kernel::OM->Get('Kernel::System::StdAttachment');
-    my $QueueObject            = $Kernel::OM->Get('Kernel::System::Queue');  # RotherOSS:
+# Rother OSS / LightAdmin
+    my $QueueObject            = $Kernel::OM->Get('Kernel::System::Queue');
+# EO LightAdmin
 
     # ------------------------------------------------------------ #
     # template <-> attachment 1:n
@@ -54,9 +56,7 @@ sub Run {
             StandardTemplateID => $ID,
         );
 
-        # ---
-        # RotherOSS
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $ID );
             my $Permission = $QueueObject->QueueListPermission(
@@ -70,7 +70,7 @@ sub Run {
                 undef %Member;
             }
         }
-        # ---
+# EO LightAdmin
 
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
@@ -115,9 +115,7 @@ sub Run {
             AttachmentID => $ID,
         );
 
-        # ---
-        # RotherOSS
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             # Filter out templates without permission.
             for my $StandardTemplateID ( keys %StandardTemplateData ) {
@@ -143,7 +141,7 @@ sub Run {
                 undef %Member;
             }
         }
-        # ---
+# EO LightAdmin
 
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
@@ -348,7 +346,9 @@ sub _Overview {
     my ( $Self, %Param ) = @_;
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');  # RotherOSS:
+# Rother OSS / LightAdmin
+    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
+# EO LightAdmin
 
     $LayoutObject->Block(
         Name => 'Overview',
@@ -385,9 +385,7 @@ sub _Overview {
             keys %StandardTemplateData
             )
         {
-            # ---
-            # RotherOSS
-            # ---
+# Rother OSS / LightAdmin
             if ( $Self->{LightAdmin} ) {
                 my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $StandardTemplateID );
                 my $Permission = $QueueObject->QueueListPermission(
@@ -399,7 +397,7 @@ sub _Overview {
                     next;
                 }
             }
-            # ---
+# EO LightAdmin
 
             $LayoutObject->Block(
                 Name => 'List1n',

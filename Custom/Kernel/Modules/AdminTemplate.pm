@@ -34,7 +34,9 @@ sub Run {
     my $LayoutObject           = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $StandardTemplateObject = $Kernel::OM->Get('Kernel::System::StandardTemplate');
     my $StdAttachmentObject    = $Kernel::OM->Get('Kernel::System::StdAttachment');
-    my $QueueObject            = $Kernel::OM->Get('Kernel::System::Queue');  # RotherOSS:
+# Rother OSS / LightAdmin
+    my $QueueObject            = $Kernel::OM->Get('Kernel::System::Queue');
+# EO LightAdmin
 
     my $Notification = $ParamObject->GetParam( Param => 'Notification' ) || '';
 
@@ -47,9 +49,7 @@ sub Run {
             ID => $ID,
         );
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
 
@@ -71,7 +71,7 @@ sub Run {
                 );
             }
         }
-        # ---
+# EO LightAdmin
 
         my @SelectedAttachment;
         my %SelectedAttachmentData = $StdAttachmentObject->StdAttachmentStandardTemplateMemberList(
@@ -140,9 +140,7 @@ sub Run {
             $Errors{'NameInvalid'} = 'ServerError';
         }
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $GetParam{ID} );
             my $Permission = $QueueObject->QueueListPermission(
@@ -156,7 +154,7 @@ sub Run {
                 $Errors{NoPermission} = 1;
             }
         }
-        # ---
+# EO LightAdmin
 
         # if no errors occurred
         if ( !%Errors ) {
@@ -355,9 +353,7 @@ sub Run {
 
         my $ID = $ParamObject->GetParam( Param => 'ID' );
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $ID );
             my $Permission = $QueueObject->QueueListPermission(
@@ -371,7 +367,7 @@ sub Run {
                 return $LayoutObject->ErrorScreen();
             }
         }
-        # ---
+# EO LightAdmin
 
         my $Delete = $StandardTemplateObject->StandardTemplateDelete(
             ID => $ID,
@@ -452,9 +448,7 @@ sub _Edit {
         Class        => 'Modernize',
     );
 
-    # ---
-    # RotherOSS:
-    # ---
+# Rother OSS / LightAdmin
     # if ( $Self->{LightAdmin} ) {
     #     my @DisabledAttachments;
     #     my $Disabled = 0;
@@ -494,7 +488,7 @@ sub _Edit {
     #         Disabled       => $Disabled,
     #     );
     # }
-    # ---
+# EO LightAdmin
 
     my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
 
@@ -548,7 +542,9 @@ sub _Overview {
     my ( $Self, %Param ) = @_;
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');  # RotherOSS:
+# Rother OSS / LightAdmin
+    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
+# EO LightAdmin
 
     $LayoutObject->Block(
         Name => 'Overview',
@@ -588,9 +584,8 @@ sub _Overview {
 
             my %Data = %{ $ListGet{$ID} };
 
-            # ---
-            # RotherOSS: Check queue permissions of linked templates.
-            # ---
+# Rother OSS / LightAdmin
+            # check queue permissions of linked templates.
             if ( $Self->{LightAdmin} ) {
                 my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $Data{ID} );
                 $Data{Permission} = $QueueObject->QueueListPermission(
@@ -600,7 +595,7 @@ sub _Overview {
                 );
                 next if !$Data{Permission};
             }
-            # ---
+# EO LightAdmin
 
             my @SelectedAttachment;
             my %SelectedAttachmentData

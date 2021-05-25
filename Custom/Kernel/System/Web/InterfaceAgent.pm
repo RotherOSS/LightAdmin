@@ -998,13 +998,11 @@ sub Run {
                     $Param{AccessRo} = 1;
                 }
             }
-            # ---
-            # RotherOSS:
-            # ---
+# Rother OSS / LightAdmin
             if ( $Param{Action} =~ /^Admin/ && !$Param{AccessRw} && $Param{AccessRo} ) {
                 $Param{LightAdmin} = 1;
             }
-            # ---
+# EO LightAdmin
             if ( !$Param{AccessRo} && !$Param{AccessRw} || !$Param{AccessRo} && $Param{AccessRw} ) {
 
                 print $Kernel::OM->Get('Kernel::Output::HTML::Layout')->NoPermission(

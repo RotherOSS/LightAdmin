@@ -138,7 +138,7 @@
                             <td>[% Translate(Data.Valid) | html %]</td>
                             <td>[% Data.ChangeTime | Localize("TimeShort") %]</td>
                             <td>[% Data.CreateTime | Localize("TimeShort") %]</td>
-# RotherOSS:
+# Rother OSS / LightAdmin
                         [% IF Data.Permission != 'ro' %]
                             <td class="Center"><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=NotificationExport;ID=[% Data.ID | uri %];[% Env("ChallengeTokenParam") | html %]"><i class="fa fa-download"></i><span class="InvisibleText">[% Translate("Export") | html %]</span></a></td>
                             <td class="Center"><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=NotificationCopy;ID=[% Data.ID | uri %];[% Env("ChallengeTokenParam") | html %]"><i class="fa fa-copy"></i><span class="InvisibleText">[% Translate("Copy") | html %]</span></a></td>
@@ -152,7 +152,7 @@
                             <td></td>
                             <td></td>
                         [% END %]
-# ---
+# EO LightAdmin
                         </tr>
 [% RenderBlockEnd("OverviewResultRow") %]
                         <tr class="FilterMessage Hidden">
@@ -289,7 +289,7 @@
                         </div>
                         <div class="Clear"></div>
 
-# RotherOSS:
+# Rother OSS / LightAdmin
                     [% IF Data.LightAdmin %]
                         <label for="QueueID" class="Mandatory">
                             <span class="Marker">*</span>[% Translate("Queue") | html %]:
@@ -308,7 +308,7 @@
                         </div>
                         <div class="Clear"></div>
                     [% END %]
-# ---
+# EO LightAdmin
 
                         <label for="LockID">[% Translate("Lock") | html %]: </label>
                         <div class="Field">
@@ -343,13 +343,13 @@
                         </div>
                         <div class="Clear"></div>
 
-# RotherOSS:
+# Rother OSS / LightAdmin
                         <label for="CalendarFilter">[% Translate("Calendar") | html %]: </label>
                         <div class="Field">
                             [% Data.CalendarFilterStrg %]
                         </div>
                         <div class="Clear"></div>
-# ---
+# EO LightAdmin
 
 [% RenderBlockStart("DynamicField") %]
                         <div class="SpacingTop"></div>
@@ -675,7 +675,7 @@
                     </div>
                 </div>
             </div>
-# RotherOSS:
+# Rother OSS / LightAdmin
         [% IF Data.Permission != 'ro' %]
             <div class="WidgetSimple SpacingTop">
                 <div class="Header">
@@ -702,7 +702,7 @@
                 </div>
             </div>
         [% END %]
-# ---
+# EO LightAdmin
         </form>
 
         <div class="WidgetSimple SpacingTop Collapsed">

@@ -43,9 +43,8 @@ sub Run {
             ID => $ID,
         );
 
-        # ---
-        # RotherOSS: Check permission for all linked templates.
-        # ---
+# Rother OSS / LightAdmin
+        # check permission for all linked templates.
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
 
@@ -64,7 +63,7 @@ sub Run {
                 );
             }
         }
-        # ---
+# EO LightAdmin
 
         $Self->_Edit(
             Action => 'Change',
@@ -104,9 +103,7 @@ sub Run {
             }
         }
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                 ID     => $GetParam{ID},
@@ -118,7 +115,7 @@ sub Run {
                 $Errors{NoPermission} = 1;
             }
         }
-        # ---
+# EO LightAdmin
 
         # if no errors occurred
         if ( !%Errors ) {
@@ -264,9 +261,7 @@ sub Run {
 
         my $ID     = $ParamObject->GetParam( Param => 'ID' );
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                 ID     => $ID,
@@ -283,7 +278,7 @@ sub Run {
                 );
             }
         }
-        # ---
+# EO LightAdmin
 
         my $Delete = $StdAttachmentObject->StdAttachmentDelete(
             ID => $ID,
@@ -311,9 +306,7 @@ sub Run {
             ID => $ID,
         );
 
-        # ---
-        # RotherOSS:
-        # ---
+# Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                 ID      => $ID,
@@ -326,7 +319,7 @@ sub Run {
                 %Data = ();
             }
         }
-        # ---
+# EO LightAdmin
 
         if ( !%Data ) {
             return $LayoutObject->ErrorScreen();
@@ -437,9 +430,8 @@ sub _Overview {
                 ID => $ID,
             );
 
-            # ---
-            # RotherOSS: Check permission for all linked templates.
-            # ---
+# Rother OSS / LightAdmin
+            # check permission for all linked templates.
             if ( $Self->{LightAdmin} ) {
                 $Data{Permission} = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                     ID      => $ID,
@@ -448,7 +440,7 @@ sub _Overview {
                 );
                 next if !$Data{Permission};
             }
-            # ---
+# EO LightAdmin
 
             $LayoutObject->Block(
                 Name => 'OverviewResultRow',
