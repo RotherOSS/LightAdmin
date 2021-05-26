@@ -19,7 +19,6 @@
 		<File Permission="660" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminNotificationEvent.tt"/>
 		<File Permission="660" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminTemplate.tt"/>
 		<File Permission="660" Location="Custom/Kernel/System/Ticket/Event/NotificationEvent.pm"/>
-		<File Permission="660" Location="Custom/Kernel/System/Web/InterfaceAgent.pm"/>
 		<File Permission="660" Location="Custom/Kernel/System/Queue.pm"/>
 		<File Permission="660" Location="Custom/Kernel/System/StdAttachment.pm"/>
 		<File Permission="660" Location="Kernel/Language/de_RotherOSSLightAdmin.pm"/>

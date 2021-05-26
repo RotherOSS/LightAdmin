@@ -21,6 +21,11 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
+# Rother OSS / LightAdmin
+    if ( !$Param{AccessRw} && $Param{AccessRo} ) {
+        $Self->{LightAdmin} = 1;
+    }
+# EO LightAdmin
 
     return $Self;
 }
