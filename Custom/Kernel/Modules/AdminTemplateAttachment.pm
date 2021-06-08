@@ -63,6 +63,19 @@ sub Run {
 
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
+            # Filter out attachments without permission.
+            if ( %StandardAttachmentData ) {
+                for my $StandardAttachmentID ( sort keys %StandardAttachmentData ) {
+                    my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
+                        ID     => $StandardAttachmentID,
+                        UserID => $Self->{UserID},
+                    );
+                    if ( $Permission ne 'rw' ) {
+                        delete $StandardAttachmentData{$StandardAttachmentID}
+                    }
+                }
+            }
+
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $ID );
             my $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => [ keys %Queues ],
@@ -372,6 +385,21 @@ sub _Overview {
     my %StandardTemplateData = $StandardTemplateObject->StandardTemplateList(
         Valid => 1,
     );
+# Rother OSS / LightAdmin
+    if ( $Self->{LightAdmin} && %StandardTemplateData ) {
+        for my $StandardTemplateID ( sort keys %StandardTemplateData ) {
+            my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $StandardTemplateID );
+            my $Permission = $QueueObject->QueueListPermission(
+                QueueIDs => [ keys %Queues ],
+                UserID   => $Self->{UserID},
+                Default  => 'rw',
+            );
+            if ( $Permission ne 'rw' ) {
+                delete $StandardTemplateData{$StandardTemplateID}
+            }
+        }
+    }
+# EO LightAdmin
 
     # if there are any templates, they are shown
     if (%StandardTemplateData) {
@@ -390,20 +418,6 @@ sub _Overview {
             keys %StandardTemplateData
             )
         {
-# Rother OSS / LightAdmin
-            if ( $Self->{LightAdmin} ) {
-                my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $StandardTemplateID );
-                my $Permission = $QueueObject->QueueListPermission(
-                    QueueIDs => [ keys %Queues ],
-                    UserID   => $Self->{UserID},
-                    Default  => 'rw',
-                );
-                if ( $Permission ne 'rw' ) {
-                    next;
-                }
-            }
-# EO LightAdmin
-
             $LayoutObject->Block(
                 Name => 'List1n',
                 Data => {
@@ -425,6 +439,19 @@ sub _Overview {
 
     # get queue data
     my %StdAttachmentData = $Kernel::OM->Get('Kernel::System::StdAttachment')->StdAttachmentList( Valid => 1 );
+# Rother OSS / LightAdmin
+    if ( $Self->{LightAdmin} && %StandardAttachmentData ) {
+        for my $StandardAttachmentID ( sort keys %StandardAttachmentData ) {
+            my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
+                ID     => $StandardAttachmentID,
+                UserID => $Self->{UserID},
+            );
+            if ( $Permission ne 'rw' ) {
+                delete $StandardAttachmentData{$StandardAttachmentID}
+            }
+        }
+    }
+# EO LightAdmin
 
     # if there are any attachments, they are shown
     if (%StdAttachmentData) {
