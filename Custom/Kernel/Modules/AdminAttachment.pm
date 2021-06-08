@@ -441,7 +441,6 @@ sub _Overview {
                 $Data{Permission} = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                     ID      => $ID,
                     UserID  => $Self->{UserID},
-                    Default => 'ro',
                 );
                 next if !$Data{Permission};
             }

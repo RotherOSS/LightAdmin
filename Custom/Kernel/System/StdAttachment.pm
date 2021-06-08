@@ -686,7 +686,9 @@ sub StdAttachmentStandardTemplatePermission {
     my %TemplateList = $Self->StdAttachmentStandardTemplateMemberList( AttachmentID => $Param{ID} );
 
     # 'rw' is the default permission on not linked attachments.
-    my $Permission = %TemplateList ? '' : 'rw';
+    return 'rw' if !%TemplateList;
+
+    my $Permission;
 
     for my $TemplateID ( keys %TemplateList ) {
         # Get all queues linked with the template.
@@ -697,13 +699,13 @@ sub StdAttachmentStandardTemplatePermission {
             Default  => 'rw',
         );
 
-        # The lowest permission level counts.
-        if (!$TemplatePermission) {
-            return $Param{Default};
-        } elsif ( $TemplatePermission eq 'rw' && !$Permission ) {
-            $Permission = 'rw';
-        } elsif ( $TemplatePermission eq 'ro' ) {
-            $Permission = 'ro';
+        if ( !defined $Permission ) {
+            $Permission = $TemplatePermission // '';
+
+            return 'ro' if $Permission eq 'ro';
+        }
+        elsif ( $Permission ne $TemplatePermission ) {
+            return 'ro';
         }
     }
 
