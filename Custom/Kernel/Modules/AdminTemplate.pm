@@ -111,6 +111,22 @@ sub Run {
         $LayoutObject->ChallengeTokenCheck();
 
         my @NewIDs = $ParamObject->GetArray( Param => 'IDs' );
+# Rother OSS / LightAdmin
+        if ( $Self->{LightAdmin} ) {
+            my @CheckedIDs;
+            for my $ID ( @NewIDs ) {
+                my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
+                    ID     => $ID,
+                    UserID => $Self->{UserID},
+                );
+                if ( $Permission eq 'rw' ) {
+                    push @CheckedIDs. $ID;
+                }
+            }
+            @NewIDs = @CheckedIDs;
+        }
+# EO LightAdmin
+
         my ( %GetParam, %Errors );
         for my $Parameter (qw(ID Name Comment ValidID TemplateType)) {
             $GetParam{$Parameter} = $ParamObject->GetParam( Param => $Parameter ) || '';
@@ -256,6 +272,22 @@ sub Run {
         $LayoutObject->ChallengeTokenCheck();
 
         my @NewIDs = $ParamObject->GetArray( Param => 'IDs' );
+# Rother OSS / LightAdmin
+        if ( $Self->{LightAdmin} ) {
+            my @CheckedIDs;
+            for my $ID ( @NewIDs ) {
+                my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
+                    ID     => $ID,
+                    UserID => $Self->{UserID},
+                );
+                if ( $Permission eq 'rw' ) {
+                    push @CheckedIDs. $ID;
+                }
+            }
+            @NewIDs = @CheckedIDs;
+        }
+# EO LightAdmin
+
         my ( %GetParam, %Errors );
 
         for my $Parameter (qw(ID Name Comment ValidID TemplateType)) {
@@ -441,7 +473,24 @@ sub _Edit {
         Class      => 'Modernize Validate_Required ' . ( $Param{Errors}->{'TemplateTypeInvalid'} || '' ),
     );
 
-    my %AttachmentData = $Kernel::OM->Get('Kernel::System::StdAttachment')->StdAttachmentList( Valid => 1 );
+# Rother OSS / LightAdmin
+#    my %AttachmentData = $Kernel::OM->Get('Kernel::System::StdAttachment')->StdAttachmentList( Valid => 1 );
+    my $StdAttachmentObject = $Kernel::OM->Get('Kernel::System::StdAttachment');
+    my %AttachmentData      = $StdAttachmentObject->StdAttachmentList( Valid => 1 );
+
+    if ( $Self->{LightAdmin} ) {
+        for my $Key ( sort keys %AttachmentData ) {
+            my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
+                ID     => $Key,
+                UserID => $Self->{UserID},
+            );
+            if ( $Permission ne 'rw' ) {
+                delete $AttachmentData{$Key};
+            }
+        }
+    }
+# EO LightAdmin
+
     $Param{AttachmentOption} = $LayoutObject->BuildSelection(
         Data         => \%AttachmentData,
         Name         => 'IDs',
@@ -452,48 +501,6 @@ sub _Edit {
         SelectedID   => $Param{SelectedAttachments},
         Class        => 'Modernize',
     );
-
-# Rother OSS / LightAdmin
-    # if ( $Self->{LightAdmin} ) {
-    #     my @DisabledAttachments;
-    #     my $Disabled = 0;
-
-    #     for my $AttachmentID (keys %AttachmentData) {
-    #         my $Permission = $Kernel::OM->Get('Kernel::System::StdAttachment')->StdAttachmentStandardTemplatePermission(
-    #             ID     => $AttachmentID,
-    #             UserID => $Self->{UserID},
-    #         );
-
-    #         if ( !$Permission ) {
-    #             # Filter out attachments without 'ro' permission.
-    #             delete $AttachmentData{$AttachmentID};
-    #         } elsif ( $Permission eq 'ro' ) {
-    #             # Disable selection of attachments without 'rw' permission.
-    #             push @DisabledAttachments, $AttachmentData{$AttachmentID};
-    #         }
-
-    #         # If an attachment without permission (of the current user) is selected, attachments can not be changed.
-    #         for my $SelectedAttachmentID ( @{ $Param{SelectedAttachments} } ) {
-    #             if ( !$Permission && $SelectedAttachmentID == $AttachmentID ) {
-    #                 $Disabled = 1;
-    #             }
-    #         }
-    #     }
-
-    #     $Param{AttachmentOption} = $LayoutObject->BuildSelection(
-    #         Data           => \%AttachmentData,
-    #         Name           => 'IDs',
-    #         Multiple       => 1,
-    #         Size           => 6,
-    #         Translation    => 0,
-    #         PossibleNone   => 1,
-    #         SelectedID     => $Param{SelectedAttachments},
-    #         DisabledBranch => \@DisabledAttachments,
-    #         Class          => 'Modernize',
-    #         Disabled       => $Disabled,
-    #     );
-    # }
-# EO LightAdmin
 
     my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
 
