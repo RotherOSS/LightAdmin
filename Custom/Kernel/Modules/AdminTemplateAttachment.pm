@@ -64,14 +64,14 @@ sub Run {
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             # Filter out attachments without permission.
-            if ( %StandardAttachmentData ) {
-                for my $StandardAttachmentID ( sort keys %StandardAttachmentData ) {
+            if ( %StdAttachmentData ) {
+                for my $StdAttachmentID ( sort keys %StdAttachmentData ) {
                     my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
-                        ID     => $StandardAttachmentID,
+                        ID     => $StdAttachmentID,
                         UserID => $Self->{UserID},
                     );
                     if ( $Permission ne 'rw' ) {
-                        delete $StandardAttachmentData{$StandardAttachmentID}
+                        delete $StdAttachmentData{$StdAttachmentID}
                     }
                 }
             }
@@ -440,14 +440,14 @@ sub _Overview {
     # get queue data
     my %StdAttachmentData = $Kernel::OM->Get('Kernel::System::StdAttachment')->StdAttachmentList( Valid => 1 );
 # Rother OSS / LightAdmin
-    if ( $Self->{LightAdmin} && %StandardAttachmentData ) {
-        for my $StandardAttachmentID ( sort keys %StandardAttachmentData ) {
-            my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
-                ID     => $StandardAttachmentID,
+    if ( $Self->{LightAdmin} && %StdAttachmentData ) {
+        for my $StdAttachmentID ( sort keys %StdAttachmentData ) {
+            my $Permission = $Kernel::OM->Get('Kernel::System::StdAttachment')->StdAttachmentStandardTemplatePermission(
+                ID     => $StdAttachmentID,
                 UserID => $Self->{UserID},
             );
             if ( $Permission ne 'rw' ) {
-                delete $StandardAttachmentData{$StandardAttachmentID}
+                delete $StdAttachmentData{$StdAttachmentID}
             }
         }
     }
