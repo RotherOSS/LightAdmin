@@ -149,12 +149,11 @@ sub Run {
             }
 
             # Check the permission.
-            my %RwQueues = $QueueObject->GetAllQueues(
+            my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
+                ID     => $ID,
                 UserID => $Self->{UserID},
-                Type   => 'rw',
             );
-            
-            if ( !$RwQueues{$ID} ) {
+            if ( $Permission ne 'rw' ) {
                 undef %StdAttachmentData;
                 undef %Member;
             }
