@@ -120,7 +120,7 @@ sub Run {
                     UserID => $Self->{UserID},
                 );
                 if ( $Permission eq 'rw' ) {
-                    push @CheckedIDs. $ID;
+                    push @CheckedIDs, $ID;
                 }
             }
             @NewIDs = @CheckedIDs;
