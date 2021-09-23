@@ -22,5 +22,6 @@
 		<File Permission="660" Location="Custom/Kernel/System/Queue.pm"/>
 		<File Permission="660" Location="Custom/Kernel/System/StdAttachment.pm"/>
 		<File Permission="660" Location="Kernel/Language/de_RotherOSSLightAdmin.pm"/>
+        <File Permission="660" Location="doc/de/RotherOSS-LightAdmin.pdf"/>
 	</Filelist>
 </otrs_package>
