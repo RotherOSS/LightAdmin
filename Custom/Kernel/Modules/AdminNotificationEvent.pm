@@ -1083,24 +1083,32 @@ sub _Edit {
             Type   => 'rw',
         );
 
-        # Filter out queues without 'ro' permission.
-        for my $QueueID ( keys %RwQueues ) {
-            delete $RoQueues{$QueueID};
+        # Add disabled queues
+        my @DisabledQueues;
+        if ( IsArrayRefWithData( $Param{Data}->{QueueID} ) {
+            for my $QueueID ( @{ $Param{Data}->{QueueID} } ) {
+                if ( !$RwQueues{ $QueueID } ) {
+
+                    # the queue has to exist in RoQueues, else the agent would not see the notification
+                    $RwQueues{ $QueueID } = $RoQueues{ $QueueID };
+
+                    # this can have the sideeffect that if the agent has rw on queue X::Y, but queue X gets added here,
+                    # X::Y will be disabled as part of the branch, too, but the agent cannot alter this notification anyways
+                    push @DisabledQueues, $QueueID;
+                }
+            }
         }
 
-        # Disable selection of queues without 'rw' permission.
-        my @DisabledQueues = values %RoQueues;
-
         $Param{QueuesStrg} = $LayoutObject->BuildSelection(
-            Data           => { $QueueObject->GetAllQueues( UserID => $Self->{UserID} ) },
-            Size           => 5,
-            Multiple       => 1,
-            Name           => 'QueueID',
-            TreeView       => $TreeView,
-            SelectedID     => $Param{Data}->{QueueID},
-            DisabledBranch => \@DisabledQueues,
-            Translation    => 0,
-            Class          => 'Modernize W75pc Validate_Required',
+            Data               => \%RwQueues,
+            Size               => 5,
+            Multiple           => 1,
+            Name               => 'QueueID',
+            TreeView           => $TreeView,
+            SelectedIDRefArray => $Param{Data}->{QueueID},
+            OnChangeSubmit     => 0,
+            DisabledBranch     => \@DisabledQueues,
+            Class              => 'Modernize W75pc Validate_Required',
         );
     }
 # EO LightAdmin
