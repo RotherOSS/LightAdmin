@@ -1085,17 +1085,24 @@ sub _Edit {
 
         # Add disabled queues
         my @DisabledQueues;
-        if ( IsArrayRefWithData( $Param{Data}->{QueueID} ) {
+        my @VisibleSelected;
+        if ( IsArrayRefWithData( $Param{Data}->{QueueID} ) ) {
             for my $QueueID ( @{ $Param{Data}->{QueueID} } ) {
-                if ( !$RwQueues{ $QueueID } ) {
+                if ( $RwQueues{ $QueueID } ) {
+                    push @VisibleSelected, $QueueID;
+                }
 
-                    # the queue has to exist in RoQueues, else the agent would not see the notification
+                elsif ( $RoQueues{ $QueueID } ) {
+                    # show the queue but disable it
                     $RwQueues{ $QueueID } = $RoQueues{ $QueueID };
 
                     # this can have the sideeffect that if the agent has rw on queue X::Y, but queue X gets added here,
                     # X::Y will be disabled as part of the branch, too, but the agent cannot alter this notification anyways
                     push @DisabledQueues, $QueueID;
+                    push @VisibleSelected, $QueueID;
                 }
+
+                # else -> don't show queues you have no ro access
             }
         }
 
@@ -1105,7 +1112,7 @@ sub _Edit {
             Multiple           => 1,
             Name               => 'QueueID',
             TreeView           => $TreeView,
-            SelectedIDRefArray => $Param{Data}->{QueueID},
+            SelectedIDRefArray => \@VisibleSelected,
             OnChangeSubmit     => 0,
             DisabledBranch     => \@DisabledQueues,
             Class              => 'Modernize W75pc Validate_Required',
