@@ -1,11 +1,19 @@
 # --
-# Copyright (C) 2001-2021 OTRS AG, https://otrs.com/
-# Copyright (C) 2021 Znuny GmbH, https://znuny.org/
-# Copyright (C) 2021 Rother OSS GmbH, https://rother-oss.com/
+# OTOBO is a web-based ticketing system for service organisations.
 # --
-# This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
+# Copyright (C) 2019-2022 Rother OSS GmbH, https://otobo.de/
+# --
+# $origin: otobo - e894aef610208fdc401a4df814ca59658292fbba - Kernel/System/Queue.pm
+# --
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
 # --
 
 package Kernel::System::Queue;
@@ -780,7 +788,7 @@ sub QueueAdd {
 
     # check if this request is from web and not from command line
     if ( !$Param{NoDefaultValues} ) {
-        for my $Key (
+        for (
             qw(UnlockTimeout FirstResponseTime FirstResponseNotify UpdateTime UpdateNotify SolutionTime SolutionNotify
             FollowUpLock SystemAddressID SalutationID SignatureID
             FollowUpID FollowUpLock DefaultSignKey Calendar)
@@ -788,17 +796,17 @@ sub QueueAdd {
         {
 
             # I added default values in the Load Routine
-            if ( !$Param{$Key} ) {
-                $Param{$Key} = $Self->{QueueDefaults}->{$Key} || 0;
+            if ( !$Param{$_} ) {
+                $Param{$_} = $Self->{QueueDefaults}->{$_} || 0;
             }
         }
     }
 
-    for my $Needed (qw(Name GroupID SystemAddressID SalutationID SignatureID ValidID UserID FollowUpID)) {
-        if ( !$Param{$Needed} ) {
+    for (qw(Name GroupID SystemAddressID SalutationID SignatureID ValidID UserID FollowUpID)) {
+        if ( !$Param{$_} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $_!"
             );
             return;
         }
@@ -840,8 +848,8 @@ sub QueueAdd {
             . ' (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '
             . ' ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
-            \$Param{Name},     \$Param{GroupID},        \$Param{UnlockTimeout}, \$Param{SystemAddressID},
-            \$Param{Calendar}, \$Param{DefaultSignKey}, \$Param{SalutationID},  \$Param{SignatureID},
+            \$Param{Name},              \$Param{GroupID},             \$Param{UnlockTimeout}, \$Param{SystemAddressID},
+            \$Param{Calendar},          \$Param{DefaultSignKey},      \$Param{SalutationID},  \$Param{SignatureID},
             \$Param{FirstResponseTime}, \$Param{FirstResponseNotify}, \$Param{UpdateTime},
             \$Param{UpdateNotify},      \$Param{SolutionTime},        \$Param{SolutionNotify},
             \$Param{FollowUpID},        \$Param{FollowUpLock},        \$Param{ValidID},
@@ -1099,11 +1107,14 @@ sub QueueUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(QueueID Name ValidID GroupID SystemAddressID SalutationID SignatureID UserID FollowUpID)) {
-        if ( !$Param{$Needed} ) {
+    for (
+        qw(QueueID Name ValidID GroupID SystemAddressID SalutationID SignatureID UserID FollowUpID)
+        )
+    {
+        if ( !$Param{$_} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $_!"
             );
             return;
         }
@@ -1192,7 +1203,7 @@ sub QueueUpdate {
                 valid_id = ?, change_time = current_timestamp, change_by = ?
             WHERE id = ?',
         Bind => [
-            \$Param{Name}, \$Param{Comment}, \$Param{GroupID}, \$Param{UnlockTimeout},
+            \$Param{Name},              \$Param{Comment},             \$Param{GroupID}, \$Param{UnlockTimeout},
             \$Param{FirstResponseTime}, \$Param{FirstResponseNotify}, \$Param{UpdateTime},
             \$Param{UpdateNotify},      \$Param{SolutionTime},        \$Param{SolutionNotify},
             \$Param{FollowUpID},        \$Param{FollowUpLock},        \$Param{SystemAddressID},
@@ -1219,6 +1230,8 @@ sub QueueUpdate {
     $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
         Type => $Self->{CacheType},
     );
+
+    return 1 if $Param{Name} eq $OldQueue{Name};
 
     # updated all sub queue names
     my @ParentQueue = split( /::/, $OldQueue{Name} );

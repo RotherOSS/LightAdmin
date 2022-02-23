@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<otrs_package version="1.1">
+<otobo_package version="1.1">
 	<Name>RotherOSS-LightAdmin</Name>
-	<Version>6.0.2</Version>
+	<Version>10.1.0</Version>
 	<Vendor>Rother OSS GmbH</Vendor>
 	<URL>https://rother-oss.com/</URL>
 	<License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
-	<ChangeLog Date="2021-05-19 21:30:00" Version="6.0.2">Hinweis hinzugefügt, wenn die Berechtigung zum Bearbeiten fehlt. Berechtigung bei der Anzeige von Vorlagen geändert.</ChangeLog>
-	<ChangeLog Date="2021-05-17 08:00:00" Version="6.0.1">Initial Version.</ChangeLog>
 	<Description Lang="de">Erlaubt das Erstellen und Verwalten von Vorlagen, Anhängen und Ticket-Benachrichtigungen mit einer Queue-/Gruppen-basierten Berechtigung. Zudem wird der Filter in Ticket-Benachrichtigungen um die Optionen: „Nur innerhalb der Arbeitszeit senden“ und „Nur außerhalb der Arbeitszeit senden“ erweitert.</Description>
-	<Framework>6.0.x</Framework>
+	<Framework>10.1.x</Framework>
 	<Filelist>
 		<File Permission="660" Location="Custom/Kernel/Modules/AdminAttachment.pm"/>
 		<File Permission="660" Location="Custom/Kernel/Modules/AdminNotificationEvent.pm"/>
@@ -24,4 +22,4 @@
 		<File Permission="660" Location="Kernel/Language/de_RotherOSSLightAdmin.pm"/>
         <File Permission="660" Location="doc/de/RotherOSS-LightAdmin.pdf"/>
 	</Filelist>
-</otrs_package>
+</otobo_package>
