@@ -4,8 +4,6 @@
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # Copyright (C) 2019-2022 Rother OSS GmbH, https://otobo.de/
 # --
-# $origin: otobo - e894aef610208fdc401a4df814ca59658292fbba - Kernel/Modules/AdminNotificationEvent.pm
-# --
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
 # Foundation, either version 3 of the License, or (at your option) any later version.
@@ -692,7 +690,7 @@ sub Run {
         my $NotificationID = $ParamObject->GetParam( Param => 'ID' ) || '';
         my $NotificationData;
         my %NotificationSingleData;
-        my $Filename   = 'Export_Notification.yml';
+        my $Filename = 'Export_Notification.yml';
 
         if ($NotificationID) {
 
@@ -712,8 +710,7 @@ sub Run {
             if ( !IsHashRefWithData( \%NotificationSingleData ) || $Permission ne 'rw' ) {
 # EO LightAdmin
                 return $LayoutObject->ErrorScreen(
-                    Message => $LayoutObject->{LanguageObject}
-                        ->Translate( 'There was an error getting data for Notification with ID:%s!', $NotificationID ),
+                    Message => $LayoutObject->{LanguageObject}->Translate( 'There was an error getting data for Notification with ID:%s!', $NotificationID ),
                 );
             }
 
@@ -863,7 +860,7 @@ sub Run {
         if ( !$NotificationImport->{Success} ) {
             my $Message = $NotificationImport->{Message}
                 || Translatable(
-                'Notifications could not be Imported due to a unknown error, please check OTRS logs for more information'
+                    'Notifications could not be Imported due to a unknown error, please check OTOBO logs for more information'
                 );
             return $LayoutObject->ErrorScreen(
                 Message => $Message,
@@ -1403,12 +1400,12 @@ sub _Edit {
             Name => 'NotificationLanguage',
             Data => {
                 %Param,
-                Subject => $Param{Message}->{$LanguageID}->{Subject} || '',
-                Body    => $Param{Message}->{$LanguageID}->{Body}    || '',
+                Subject            => $Param{Message}->{$LanguageID}->{Subject} || '',
+                Body               => $Param{Message}->{$LanguageID}->{Body}    || '',
                 LanguageID         => $LanguageID,
                 Language           => $Languages{$LanguageID},
                 SubjectServerError => $Param{ $LanguageID . '_SubjectServerError' } || '',
-                BodyServerError    => $Param{ $LanguageID . '_BodyServerError' } || '',
+                BodyServerError    => $Param{ $LanguageID . '_BodyServerError' }    || '',
             },
         );
 
@@ -1528,10 +1525,6 @@ sub _Edit {
     # set once per day checked value
     $Param{OncePerDayChecked} = ( $Param{Data}->{OncePerDay} ? 'checked="checked"' : '' );
 
-    my $OTRSBusinessObject      = $Kernel::OM->Get('Kernel::System::OTRSBusiness');
-    my $OTRSBusinessIsInstalled = $OTRSBusinessObject->OTRSBusinessIsInstalled();
-
-    # Third option is enabled only when OTRSBusiness is installed in the system.
     $Param{VisibleForAgentStrg} = $LayoutObject->BuildSelection(
         Data => [
             {
@@ -1542,11 +1535,6 @@ sub _Edit {
                 Key   => '1',
                 Value => Translatable('Yes'),
             },
-            {
-                Key      => '2',
-                Value    => Translatable('Yes, but require at least one active notification method.'),
-                Disabled => $OTRSBusinessIsInstalled ? 0 : 1,
-            }
         ],
         Name       => 'VisibleForAgent',
         Sort       => 'NumericKey',
@@ -1597,24 +1585,6 @@ sub _Edit {
                     },
                 );
 
-                # if not standard transport
-                if (
-                    defined $RegisteredTransports{$Transport}->{IsOTRSBusinessTransport}
-                    && $RegisteredTransports{$Transport}->{IsOTRSBusinessTransport} eq '1'
-                    && !$OTRSBusinessIsInstalled
-                    )
-                {
-
-                    # transport
-                    $LayoutObject->Block(
-                        Name => 'TransportRowRecommendation',
-                        Data => {
-                            Transport     => $Transport,
-                            TransportName => $RegisteredTransports{$Transport}->{Name},
-                        },
-                    );
-                }
-
                 next TRANSPORT;
             }
             else {
@@ -1643,7 +1613,7 @@ sub _Edit {
                     # get transport settings string from transport object
                     my $TransportSettings =
                         $TransportObject->TransportSettingsDisplayGet(
-                        %Param,
+                            %Param,
                         );
 
                     # it should decide if the default value for the
