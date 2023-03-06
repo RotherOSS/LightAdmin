@@ -1112,15 +1112,14 @@ sub _Edit {
         }
 
         $Param{QueuesStrg} = $LayoutObject->BuildSelection(
-            Data               => \%RwQueues,
-            Size               => 5,
-            Multiple           => 1,
-            Name               => 'QueueID',
-            TreeView           => $TreeView,
-            SelectedIDRefArray => \@VisibleSelected,
-            OnChangeSubmit     => 0,
-            DisabledBranch     => \@DisabledQueues,
-            Class              => 'Modernize W75pc Validate_Required',
+            Data           => \%RwQueues,
+            Size           => 5,
+            Multiple       => 1,
+            Name           => 'QueueID',
+            TreeView       => $TreeView,
+            SelectedID     => \@VisibleSelected,
+            DisabledBranch => \@DisabledQueues,
+            Class          => 'Modernize W75pc Validate_Required',
         );
     }
 # EO LightAdmin
