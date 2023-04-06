@@ -45,6 +45,9 @@ sub Run {
     my $LayoutObject           = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $QueueObject            = $Kernel::OM->Get('Kernel::System::Queue');
     my $StandardTemplateObject = $Kernel::OM->Get('Kernel::System::StandardTemplate');
+# Rother OSS / LightAdmin
+    my $LightAdminObject       = $Kernel::OM->Get('Kernel::System::LightAdmin');
+# EO LightAdmin
 
     # ------------------------------------------------------------ #
     # template <-> queues 1:n
@@ -81,7 +84,7 @@ sub Run {
 
             # Check the permission.
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $ID );
-            my $Permission = $QueueObject->QueueListPermission(
+            my $Permission = $LightAdminObject->QueueListPermission(
                 QueueIDs => [ keys %Queues ],
                 UserID   => $Self->{UserID},
                 Default  => 'rw',
@@ -143,7 +146,7 @@ sub Run {
             # Filter out templates without permission.
             for my $StandardTemplateID ( keys %StandardTemplateData ) {
                 my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $StandardTemplateID );
-                my $Permission = $QueueObject->QueueListPermission(
+                my $Permission = $LightAdminObject->QueueListPermission(
                     QueueIDs => [ keys %Queues ],
                     UserID   => $Self->{UserID},
                     Default  => 'rw',
@@ -202,7 +205,7 @@ sub Run {
                 next if !$StandardTemplateID;  # Can contain empty string.
 
                 my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $StandardTemplateID );
-                my $Permission = $QueueObject->QueueListPermission(
+                my $Permission = $LightAdminObject->QueueListPermission(
                     QueueIDs => [ keys %Queues ],
                     UserID   => $Self->{UserID},
                     Default  => 'rw',
@@ -468,7 +471,7 @@ sub _Overview {
 # Rother OSS / LightAdmin
             if ( $Self->{LightAdmin} ) {
                 my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $StandardTemplateID );
-                my $Permission = $QueueObject->QueueListPermission(
+                my $Permission = $LightAdminObject->QueueListPermission(
                     QueueIDs => [ keys %Queues ],
                     UserID   => $Self->{UserID},
                     Default  => 'rw',

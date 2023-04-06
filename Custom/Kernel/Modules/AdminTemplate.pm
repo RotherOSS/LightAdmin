@@ -48,6 +48,7 @@ sub Run {
     my $StandardTemplateObject = $Kernel::OM->Get('Kernel::System::StandardTemplate');
     my $StdAttachmentObject    = $Kernel::OM->Get('Kernel::System::StdAttachment');
 # Rother OSS / LightAdmin
+    my $LightAdminObject       = $Kernel::OM->Get('Kernel::System::LightAdmin');
     my $QueueObject            = $Kernel::OM->Get('Kernel::System::Queue');
 # EO LightAdmin
 
@@ -76,7 +77,7 @@ sub Run {
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $ID );
-            $Data{Permission} = $QueueObject->QueueListPermission(
+            $Data{Permission} = $LightAdminObject->QueueListPermission(
                 QueueIDs => [ keys %Queues ],
                 UserID   => $Self->{UserID},
                 Default  => 'rw',
@@ -123,7 +124,7 @@ sub Run {
         if ( $Self->{LightAdmin} ) {
             my @CheckedIDs;
             for my $ID ( @NewIDs ) {
-                my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
+                my $Permission = $LightAdminObject->StdAttachmentStandardTemplatePermission(
                     ID     => $ID,
                     UserID => $Self->{UserID},
                 );
@@ -172,7 +173,7 @@ sub Run {
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $GetParam{ID} );
-            my $Permission = $QueueObject->QueueListPermission(
+            my $Permission = $LightAdminObject->QueueListPermission(
                 QueueIDs => [ keys %Queues ],
                 UserID   => $Self->{UserID},
                 Default  => 'rw',
@@ -284,7 +285,7 @@ sub Run {
         if ( $Self->{LightAdmin} ) {
             my @CheckedIDs;
             for my $ID ( @NewIDs ) {
-                my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
+                my $Permission = $LightAdminObject->StdAttachmentStandardTemplatePermission(
                     ID     => $ID,
                     UserID => $Self->{UserID},
                 );
@@ -401,7 +402,7 @@ sub Run {
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $ID );
-            my $Permission = $QueueObject->QueueListPermission(
+            my $Permission = $LightAdminObject->QueueListPermission(
                 QueueIDs => [ keys %Queues ],
                 UserID   => $Self->{UserID},
                 Default  => 'rw',
@@ -488,7 +489,7 @@ sub _Edit {
 
     if ( $Self->{LightAdmin} ) {
         for my $Key ( sort keys %AttachmentData ) {
-            my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
+            my $Permission = $LightAdminObject->StdAttachmentStandardTemplatePermission(
                 ID     => $Key,
                 UserID => $Self->{UserID},
             );
@@ -608,7 +609,7 @@ sub _Overview {
             # check queue permissions of linked templates.
             if ( $Self->{LightAdmin} ) {
                 my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $Data{ID} );
-                $Data{Permission} = $QueueObject->QueueListPermission(
+                $Data{Permission} = $LightAdminObject->QueueListPermission(
                     QueueIDs => [ keys %Queues ],
                     UserID   => $Self->{UserID},
                     Default  => 'rw',
