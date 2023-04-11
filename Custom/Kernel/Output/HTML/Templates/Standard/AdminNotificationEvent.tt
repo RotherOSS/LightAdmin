@@ -351,14 +351,6 @@
                         </div>
                         <div class="Clear"></div>
 
-# Rother OSS / LightAdmin
-                        <label for="CalendarFilter">[% Translate("Calendar") | html %]: </label>
-                        <div class="Field">
-                            [% Data.CalendarFilterStrg %]
-                        </div>
-                        <div class="Clear"></div>
-# EO LightAdmin
-
 [% RenderBlockStart("DynamicField") %]
                         <div class="SpacingTop"></div>
                         <label><h4>[% Translate("Dynamic Fields") | html %]</h4></label>
