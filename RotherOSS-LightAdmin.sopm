@@ -5,9 +5,11 @@
 	<Vendor>Rother OSS GmbH</Vendor>
 	<URL>https://rother-oss.com/</URL>
 	<License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
-	<Description Lang="de">Erlaubt das Erstellen und Verwalten von Vorlagen, Anhängen und Ticket-Benachrichtigungen mit einer Queue-/Gruppen-basierten Berechtigung. Zudem wird der Filter in Ticket-Benachrichtigungen um die Optionen: „Nur innerhalb der Arbeitszeit senden“ und „Nur außerhalb der Arbeitszeit senden“ erweitert.</Description>
+    <Description Lang="en">Enables creating and managing of templates, attachments and ticket notifications with a queue- or group-based permission concept.</Description>
+	<Description Lang="de">Erlaubt das Erstellen und Verwalten von Vorlagen, Anhängen und Ticket-Benachrichtigungen mit einer Queue-/Gruppen-basierten Berechtigung.</Description>
 	<Framework>10.1.x</Framework>
 	<Filelist>
+        <File Permission="660" Location="doc/content/index.rst" />
 		<File Permission="660" Location="Custom/Kernel/Modules/AdminAttachment.pm"/>
 		<File Permission="660" Location="Custom/Kernel/Modules/AdminNotificationEvent.pm"/>
 		<File Permission="660" Location="Custom/Kernel/Modules/AdminQueueTemplates.pm"/>
@@ -17,6 +19,5 @@
 		<File Permission="660" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminNotificationEvent.tt"/>
 		<File Permission="660" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminTemplate.tt"/>
 		<File Permission="660" Location="Kernel/Language/de_RotherOSSLightAdmin.pm"/>
-        <File Permission="660" Location="doc/de/RotherOSS-LightAdmin.pdf"/>
 	</Filelist>
 </otobo_package>
