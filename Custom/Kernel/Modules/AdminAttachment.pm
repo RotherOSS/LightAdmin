@@ -413,6 +413,9 @@ sub _Overview {
 
     my $LayoutObject        = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $StdAttachmentObject = $Kernel::OM->Get('Kernel::System::StdAttachment');
+# Rother OSS / LightAdmin
+    my $LightAdminObject    = $Kernel::OM->Get('Kernel::System::LightAdmin');
+# EO LightAdmin
 
     $LayoutObject->Block(
         Name => 'Overview',
