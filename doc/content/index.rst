@@ -47,7 +47,6 @@ The permissions can be assigend to every group. For convenience reasons, a speci
 To grant light admin permissions to the group, it has to be added to GroupRo in the following system configuration settings:
 
 * Enable the functionality in general:
-
     * Frontend::Module###Admin
     * Frontend::Navigation###Admin###001-Framework
 
