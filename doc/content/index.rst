@@ -36,7 +36,7 @@ The module adds a light admin functionality. Using this, agents can be granted r
 After package installation and configuration, the light admin user has access to ticket notifications and templates in general. Regarding the access, three states are distinguished:
 
 #. Light admin user has full access if he has rw access on all queues which affect the object.
-#. Light admin user can view, but not edit, if he has at least ro access on at least one of the queues which affect the object.
+#. Light admin user can view, but not edit, if he has at least ro access on at least one of the queues which affect the object. In case of templates and ticket notifications, no explicit queue linking means rw access.
 #. Object is related to queues on which the user has no permissions at all. These objects are hidden.
 
 Setup
