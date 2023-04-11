@@ -484,7 +484,6 @@ sub _Edit {
 
 # Rother OSS / LightAdmin
 #    my %AttachmentData = $Kernel::OM->Get('Kernel::System::StdAttachment')->StdAttachmentList( Valid => 1 );
-    my $LightAdminObject    = $Kernel::OM->Get('Kernel::System::LightAdmin');
     my $StdAttachmentObject = $Kernel::OM->Get('Kernel::System::StdAttachment');
     my %AttachmentData      = $StdAttachmentObject->StdAttachmentList( Valid => 1 );
 
@@ -565,8 +564,7 @@ sub _Overview {
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 # Rother OSS / LightAdmin
-    my $LightAdminObject = $Kernel::OM->Get('Kernel::System::LightAdmin');
-    my $QueueObject      = $Kernel::OM->Get('Kernel::System::Queue');
+    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
 # EO LightAdmin
 
     $LayoutObject->Block(

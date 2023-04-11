@@ -432,8 +432,7 @@ sub _Overview {
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 # Rother OSS / LightAdmin
-    my $LightAdminObject = $Kernel::OM->Get('Kernel::System::LightAdmin');
-    my $QueueObject      = $Kernel::OM->Get('Kernel::System::Queue');
+    my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
 # EO LightAdmin
 
     $LayoutObject->Block(
