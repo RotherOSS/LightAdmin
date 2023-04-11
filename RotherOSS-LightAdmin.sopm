@@ -19,6 +19,5 @@
 		<File Permission="660" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminNotificationEvent.tt"/>
 		<File Permission="660" Location="Custom/Kernel/Output/HTML/Templates/Standard/AdminTemplate.tt"/>
 		<File Permission="660" Location="Kernel/Language/de_RotherOSSLightAdmin.pm"/>
-        <File Permission="660" Location="Kernel/System/LightAdmin.pm"/>
 	</Filelist>
 </otobo_package>
