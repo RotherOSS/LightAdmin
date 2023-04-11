@@ -46,9 +46,6 @@ sub Run {
     my $LayoutObject        = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ParamObject         = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $StdAttachmentObject = $Kernel::OM->Get('Kernel::System::StdAttachment');
-# Rother OSS / LightAdmin
-    my $LightAdminObject    = $Kernel::OM->Get('Kernel::System::LightAdmin');
-# EO LightAdmin
 
     # ------------------------------------------------------------ #
     # change
@@ -65,7 +62,7 @@ sub Run {
 # Rother OSS / LightAdmin
         # check permission for all linked templates.
         if ( $Self->{LightAdmin} ) {
-            $Data{Permission} = $LightAdminObject->StdAttachmentStandardTemplatePermission(
+            $Data{Permission} = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                 ID      => $ID,
                 UserID  => $Self->{UserID},
                 Default => 'ro',
@@ -121,7 +118,7 @@ sub Run {
 
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
-            my $Permission = $LightAdminObject->StdAttachmentStandardTemplatePermission(
+            my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                 ID     => $GetParam{ID},
                 UserID => $Self->{UserID},
             );
@@ -279,7 +276,7 @@ sub Run {
 
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
-            my $Permission = $LightAdminObject->StdAttachmentStandardTemplatePermission(
+            my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                 ID     => $ID,
                 UserID => $Self->{UserID},
             );
@@ -324,7 +321,7 @@ sub Run {
 
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
-            my $Permission = $LightAdminObject->StdAttachmentStandardTemplatePermission(
+            my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                 ID      => $ID,
                 UserID  => $Self->{UserID},
                 Default => 'ro',
@@ -449,7 +446,7 @@ sub _Overview {
 # Rother OSS / LightAdmin
             # check permission for all linked templates.
             if ( $Self->{LightAdmin} ) {
-                $Data{Permission} = $LightAdminObject->StdAttachmentStandardTemplatePermission(
+                $Data{Permission} = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                     ID      => $ID,
                     UserID  => $Self->{UserID},
                 );

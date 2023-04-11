@@ -44,7 +44,6 @@ sub Run {
 
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 # Rother OSS / LightAdmin
-    my $LightAdminObject = $Kernel::OM->Get('Kernel::System::LightAdmin');
     my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
 # EO LightAdmin
     my $RichText     = $ConfigObject->Get('Frontend::RichText');
@@ -100,7 +99,7 @@ sub Run {
 
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
-            $Data{Permission} = $LightAdminObject->QueueListPermission(
+            $Data{Permission} = $QueueObject->QueueListPermission(
                 QueueIDs => $Data{Data}{QueueID},
                 UserID   => $Self->{UserID},
             );
@@ -167,6 +166,9 @@ sub Run {
             ArticleSenderTypeID ArticleIsVisibleForCustomer ArticleCommunicationChannelID
             Transports OncePerDay SendOnOutOfOffice VisibleForAgent VisibleForAgentTooltip
             LanguageID AgentEnabledByDefault)
+# Rother OSS / LightAdmin
+            , 'CalendarFilter'
+# EO LightAdmin
             )
         {
             my @Data = $ParamObject->GetArray( Param => $Parameter );
@@ -206,7 +208,7 @@ sub Run {
 
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
-            $Permission = $LightAdminObject->QueueListPermission(
+            $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => $GetParam{Data}->{QueueID},
                 UserID   => $Self->{UserID},
             );
@@ -426,6 +428,9 @@ sub Run {
             ArticleSenderTypeID ArticleIsVisibleForCustomer ArticleCommunicationChannelID
             Transports OncePerDay SendOnOutOfOffice VisibleForAgent VisibleForAgentTooltip
             LanguageID AgentEnabledByDefault)
+# Rother OSS / LightAdmin
+            , 'CalendarFilter'
+# EO LightAdmin
             )
         {
             my @Data = $ParamObject->GetArray( Param => $Parameter );
@@ -465,7 +470,7 @@ sub Run {
 
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
-            $Permission = $LightAdminObject->QueueListPermission(
+            $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => $GetParam{Data}->{QueueID},
                 UserID   => $Self->{UserID},
             );
@@ -655,7 +660,7 @@ sub Run {
                 UserID => $Self->{UserID},
             );
 
-            $Permission = $LightAdminObject->QueueListPermission(
+            $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => $Notification{Data}{QueueID},
                 UserID   => $Self->{UserID},
             );
@@ -696,7 +701,7 @@ sub Run {
 
 # Rother OSS / LightAdmin
             if ( $Self->{LightAdmin} ) {
-                $Permission = $LightAdminObject->QueueListPermission(
+                $Permission = $QueueObject->QueueListPermission(
                     QueueIDs => $NotificationSingleData{Data}{QueueID},
                     UserID   => $Self->{UserID},
                 );
@@ -728,7 +733,7 @@ sub Run {
                 # filter out notifications without rw permission on all queues.
                 $Permission = $Self->{LightAdmin} ? '' : 'rw';
                 if ( $Self->{LightAdmin} ) {
-                    $Permission = $LightAdminObject->QueueListPermission(
+                    $Permission = $QueueObject->QueueListPermission(
                         QueueIDs => $Notificationdetails{$ItemID}{Data}{QueueID},
                         UserID   => $Self->{UserID},
                     );
@@ -772,7 +777,7 @@ sub Run {
 
 # Rother OSS / LightAdmin
         if ( $Self->{LightAdmin} ) {
-            $Permission = $LightAdminObject->QueueListPermission(
+            $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => $NotificationData{Data}{QueueID},
                 UserID   => $Self->{UserID},
             );
@@ -826,7 +831,7 @@ sub Run {
 
             my $NoPermission;
             for my $Notification ( @{$Notifications} ) {
-                $Permission = $LightAdminObject->QueueListPermission(
+                $Permission = $QueueObject->QueueListPermission(
                     QueueIDs => $Notification->{Data}->{QueueID},
                     UserID   => $Self->{UserID},
                 );
@@ -1222,6 +1227,20 @@ sub _Edit {
             Data => \%Param,
         );
     }
+
+# Rother OSS / LightAdmin
+    $Param{CalendarFilterStrg} = $LayoutObject->BuildSelection(
+        Data => {
+            SendWithinHours  => Translatable('Only send within working hours'),
+            SendOutsideHours => Translatable('Only send outside working hours'),
+        },
+        Name         => 'CalendarFilter',
+        SelectedID   => $Param{Data}->{CalendarFilter},
+        Class        => 'Modernize W75pc',
+        Translation  => 1,
+        PossibleNone => 1,
+    );
+# EO LightAdmin
 
     # create dynamic field HTML for set with historical data options
     my $PrintDynamicFieldsSearchHeader = 1;
@@ -1684,7 +1703,7 @@ sub _Overview {
 
 # Rother OSS / LightAdmin
             if ( $Self->{LightAdmin} ) {
-                $Data{Permission} = $Kernel::OM->Get('Kernel::System::LightAdmin')->QueueListPermission(
+                $Data{Permission} = $Kernel::OM->Get('Kernel::System::Queue')->QueueListPermission(
                     QueueIDs => $Data{Data}{QueueID},
                     UserID   => $Self->{UserID},
                 );

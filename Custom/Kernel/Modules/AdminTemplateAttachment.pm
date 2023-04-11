@@ -48,7 +48,6 @@ sub Run {
     my $StandardTemplateObject = $Kernel::OM->Get('Kernel::System::StandardTemplate');
     my $StdAttachmentObject    = $Kernel::OM->Get('Kernel::System::StdAttachment');
 # Rother OSS / LightAdmin
-    my $LightAdminObject       = $Kernel::OM->Get('Kernel::System::LightAdmin');
     my $QueueObject            = $Kernel::OM->Get('Kernel::System::Queue');
 # EO LightAdmin
 
@@ -75,7 +74,7 @@ sub Run {
             # Filter out attachments without permission.
             if ( %StdAttachmentData ) {
                 for my $StdAttachmentID ( sort keys %StdAttachmentData ) {
-                    my $Permission = $LightAdminObject->StdAttachmentStandardTemplatePermission(
+                    my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                         ID     => $StdAttachmentID,
                         UserID => $Self->{UserID},
                     );
@@ -86,7 +85,7 @@ sub Run {
             }
 
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $ID );
-            my $Permission = $LightAdminObject->QueueListPermission(
+            my $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => [ keys %Queues ],
                 UserID   => $Self->{UserID},
                 Default  => 'rw',
@@ -146,7 +145,7 @@ sub Run {
             # Filter out templates without permission.
             for my $StandardTemplateID ( keys %StandardTemplateData ) {
                 my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $StandardTemplateID );
-                my $Permission = $LightAdminObject->QueueListPermission(
+                my $Permission = $QueueObject->QueueListPermission(
                     QueueIDs => [ keys %Queues ],
                     UserID   => $Self->{UserID},
                     Default  => 'rw',
@@ -157,7 +156,7 @@ sub Run {
             }
 
             # Check the permission.
-            my $Permission = $LightAdminObject->StdAttachmentStandardTemplatePermission(
+            my $Permission = $StdAttachmentObject->StdAttachmentStandardTemplatePermission(
                 ID     => $ID,
                 UserID => $Self->{UserID},
             );
@@ -396,7 +395,7 @@ sub _Overview {
     if ( $Self->{LightAdmin} && %StandardTemplateData ) {
         for my $StandardTemplateID ( sort keys %StandardTemplateData ) {
             my %Queues = $QueueObject->QueueStandardTemplateMemberList( StandardTemplateID => $StandardTemplateID );
-            my $Permission = $LightAdminObject->QueueListPermission(
+            my $Permission = $QueueObject->QueueListPermission(
                 QueueIDs => [ keys %Queues ],
                 UserID   => $Self->{UserID},
                 Default  => 'rw',
@@ -448,7 +447,7 @@ sub _Overview {
 # Rother OSS / LightAdmin
     if ( $Self->{LightAdmin} && %StdAttachmentData ) {
         for my $StdAttachmentID ( sort keys %StdAttachmentData ) {
-            my $Permission = $LightAdminObject->StdAttachmentStandardTemplatePermission(
+            my $Permission = $Kernel::OM->Get('Kernel::System::StdAttachment')->StdAttachmentStandardTemplatePermission(
                 ID     => $StdAttachmentID,
                 UserID => $Self->{UserID},
             );
