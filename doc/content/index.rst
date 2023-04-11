@@ -35,8 +35,8 @@ The module adds a light admin functionality. Using this, agents can be granted r
 
 After package installation and configuration, the light admin user has access to ticket notifications and templates in general. Regarding the access, three states are distinguished:
 
-#. Light admin user has full access if he has ro access on all queues which affect the object.
-#. Light admin user can view, but not edit, if he has at least rw access on all queues which affect the object.
+#. Light admin user has full access if he has rw access on all queues which affect the object.
+#. Light admin user can view, but not edit, if he has at least ro access on at least one of the queues which affect the object.
 #. Object is related to queues on which the user has no permissions at all. These objects are hidden.
 
 Setup
@@ -46,7 +46,7 @@ The permissions can be assigend to every group. For convenience reasons, a speci
 
 To grant light admin permissions to the group, it has to be added to GroupRo in the following system configuration settings:
 
-* Enable the functionality in general:
+* Enable restricted access to the general admin:
     * Frontend::Module###Admin
     * Frontend::Navigation###Admin###001-Framework
 
