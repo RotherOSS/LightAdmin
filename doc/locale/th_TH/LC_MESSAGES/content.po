@@ -1,0 +1,211 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019-2024 Rother OSS GmbH, https://otobo.de/
+# This file is distributed under the same license as the OTOBO Installation
+# Guide package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: OTOBO Installation Guide rel-11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-16 10:11+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.4.0\n"
+
+#: ../../content/index.rst:16
+msgid "Sacrifice to Sphinx"
+msgstr ""
+
+#: ../../content/index.rst:19
+msgid "Description"
+msgstr ""
+
+#: ../../content/index.rst:21
+msgid ""
+"The module adds a light admin functionality. Using this, agents can be "
+"granted restricted admin permissions to ticket notifications and "
+"templates which are linked to queues the user has access to."
+msgstr ""
+
+#: ../../content/index.rst:24
+msgid "System requirements"
+msgstr ""
+
+#: ../../content/index.rst:27
+msgid "Framework"
+msgstr ""
+
+#: ../../content/index.rst:28
+msgid "OTOBO 10.1.x"
+msgstr ""
+
+#: ../../content/index.rst:31
+msgid "Packages"
+msgstr ""
+
+#: ../../content/index.rst:32 ../../content/index.rst:36
+msgid "\\-"
+msgstr ""
+
+#: ../../content/index.rst:35
+msgid "Third-party software"
+msgstr ""
+
+#: ../../content/index.rst:39
+msgid "Usage"
+msgstr ""
+
+#: ../../content/index.rst:41
+msgid ""
+"The module adds a light admin functionality. Using this, agents can be "
+"granted restricted admin permissions to the following areas:"
+msgstr ""
+
+#: ../../content/index.rst:43
+msgid "Ticket notifications"
+msgstr ""
+
+#: ../../content/index.rst:44
+msgid "Templates including attachments and linked queues"
+msgstr ""
+
+#: ../../content/index.rst:46
+msgid ""
+"After package installation and configuration, the light admin user has "
+"access to ticket notifications and templates in general. Regarding the "
+"access, three states are distinguished:"
+msgstr ""
+
+#: ../../content/index.rst:48
+msgid ""
+"Light admin user has full access if he has rw access on all queues which "
+"affect the object."
+msgstr ""
+
+#: ../../content/index.rst:49
+msgid ""
+"Light admin user can view, but not edit, if he has at least ro access on "
+"at least one of the queues which affect the object. In case of templates "
+"no explicit queue means 'in use for no queue' and thus rw access. In case"
+" of ticket notifications no explicit queue means 'in use for all queues' "
+"and thus likely ro access (depending on the rights of the agent)."
+msgstr ""
+
+#: ../../content/index.rst:50
+msgid ""
+"Object is related to queues on which the user has no permissions at all. "
+"These objects are hidden."
+msgstr ""
+
+#: ../../content/index.rst:53
+msgid "Setup"
+msgstr ""
+
+#: ../../content/index.rst:55
+msgid ""
+"The permissions can be assigend to every group. For convenience reasons, "
+"a specialised light admin group can be created."
+msgstr ""
+
+#: ../../content/index.rst:57
+msgid ""
+"To grant light admin permissions to the group, it has to be added to "
+"GroupRo in the following system configuration settings:"
+msgstr ""
+
+#: ../../content/index.rst:61
+msgid "Enable restricted access to the general admin:"
+msgstr ""
+
+#: ../../content/index.rst:60
+msgid "Frontend::Module###Admin"
+msgstr ""
+
+#: ../../content/index.rst:61
+msgid "Frontend::Navigation###Admin###001-Framework"
+msgstr ""
+
+#: ../../content/index.rst:65
+msgid "Include notifications:"
+msgstr ""
+
+#: ../../content/index.rst:64
+msgid "Frontend::NavigationModule###AdminNotificationEvent"
+msgstr ""
+
+#: ../../content/index.rst:65
+msgid "Frontend::Module###AdminNotificationEvent"
+msgstr ""
+
+#: ../../content/index.rst:75
+msgid "Include templates:"
+msgstr ""
+
+#: ../../content/index.rst:68
+msgid "Frontend::NavigationModule###AdminTemplate"
+msgstr ""
+
+#: ../../content/index.rst:69
+msgid "Frontend::NavigationModule###AdminTemplateAttachment"
+msgstr ""
+
+#: ../../content/index.rst:70
+msgid "Frontend::NavigationModule###AdminQueueTemplates"
+msgstr ""
+
+#: ../../content/index.rst:71
+msgid "Frontend::NavigationModule###AdminAttachment"
+msgstr ""
+
+#: ../../content/index.rst:72
+msgid "Frontend::Module###AdminTemplate"
+msgstr ""
+
+#: ../../content/index.rst:73
+msgid "Frontend::Module###AdminTemplateAttachment"
+msgstr ""
+
+#: ../../content/index.rst:74
+msgid "Frontend::Module###AdminQueueTemplates"
+msgstr ""
+
+#: ../../content/index.rst:75
+msgid "Frontend::Module###AdminAttachment"
+msgstr ""
+
+#: ../../content/index.rst:78
+msgid "About"
+msgstr ""
+
+#: ../../content/index.rst:81
+msgid "Contact"
+msgstr ""
+
+#: ../../content/index.rst:82
+msgid "Rother OSS GmbH"
+msgstr ""
+
+#: ../../content/index.rst:83
+msgid "Email: hello@otobo.de"
+msgstr ""
+
+#: ../../content/index.rst:84
+msgid "Web: https://otobo.de"
+msgstr ""
+
+#: ../../content/index.rst:87
+msgid "Version"
+msgstr ""
+
+#: ../../content/index.rst:88
+msgid ""
+"Author: |doc-vendor| / Version: |doc-version| / Date of release: |doc-"
+"datestamp|"
+msgstr ""
+
