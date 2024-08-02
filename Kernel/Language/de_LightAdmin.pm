@@ -23,14 +23,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # SysConfig
-    $Self->{Translation}->{'Defines if parent-child translations for queues and services should be generated automatically.'} =
-        '';
-    $Self->{Translation}->{'Defines the initial height for the rich text editor component in pixels.'} =
-        '';
-    $Self->{Translation}->{'Defines the initial height in pixels for the rich text editor component for this screen.'} =
-        '';
-
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
     );
